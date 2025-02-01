@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="mb-4">{{ meal.name }}</h1>
+
+    <div class="row">
+        <!-- Meal Image -->
+        <div class="col-md-6">
+            {% if meal.image %}
+            <img src="{{ meal.image.url }}" class="img-fluid rounded shadow" alt="{{ meal.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/400" class="img-fluid rounded shadow" alt="{{ meal.name }}">
+            {% endif %}
+        </div>
+
+        <!-- Meal Details -->
+        <div class="col-md-6">
+            <h4>Categories</h4>
+            <p>
+                {% for category in meal.categories.all %}
+                <span class="badge bg-primary">{{ category.name }}</span>
+                {% empty %}
+                <span>No category assigned.</span>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+    <h4>Description</h4>
+    <p style="white-space: pre-line;">{{ meal.description }}</p>
+
+    <!-- Ingredients Section -->
+    <h4 class="mt-4">Ingredients</h4>
+    {% if meal.ingredients %}
+    <ul>
+        {% for ingredient in meal.ingredients.splitlines %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No ingredients listed.</p>
+    {% endif %}
+
+
+
+    <!--instruction section-->
+    <h4 class="mt-4">Instructions</h4>
+    {% if meal.instructions %}
+    <ul>
+        {% for step in meal.instructions.splitlines %}
+        {% if step.strip %}
+        {% if "Step" in step %}
+        <li><strong>{{ step }}</strong>
+            {% else %}
+            <p>{{ step }}</p>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+    </ul>
+    {% else %}
+    <p>No instructions provided.</p>
+    {% endif %}
+
+
+
+    <!-- Nutrition Chart -->
+    <h4 class="mt-4">Nutritional Breakdown</h4>
+    <canvas id="nutritionChart"></canvas>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ctx = document.getElementById('nutritionChart').getContext('2d');
+
+            var nutritionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Protein (g)', 'Carbs (g)', 'Fats (g)', 'Fibre (g)'],
+                    datasets: [{
+                        data: [
+                            {{ meal.protein }},
+                    {{ meal.carbs }},
+                        {{ meal.fats }},
+            {{ meal.fibre }}
+                    ],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722'],
+            borderColor: ['#388E3C', '#1976D2', '#FFA000', '#D84315'],
+            borderWidth: 1
+                }]
+            },
+            options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.raw;  // Display only the number
+                        }
+                    }
+                }
+            }
+        }
+        });
+    });
+    </script>
+
+
+    {% endblock %}

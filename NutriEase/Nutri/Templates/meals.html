@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">All Meals</h1>
+
+    <!-- Filter and Sort Form -->
+    <form method="get" class="mb-4">
+        <fieldset class="border p-3 rounded">
+            <legend>Filter and Sort Meals</legend>
+
+            <!-- Category Filter -->
+            <label><strong>Filter by Categories:</strong></label>
+            <div class="d-flex flex-column">
+                {{ form.category_choices }}
+            </div>
+
+            <!-- Sorting Dropdown (Handled in HTML, not Django Form) -->
+            <label for="sort_by"><strong>Sort by:</strong></label>
+            <select name="sort_by" id="sort_by" class="form-select">
+                <option value="">-- Select --</option>
+                <option value="calories" {% if request.GET.sort_by=="calories" %}selected{% endif %}>Low Calories
+                </option>
+                <option value="-protein" {% if request.GET.sort_by=="-protein" %}selected{% endif %}>High Protein
+                </option>
+                <option value="-fibre" {% if request.GET.sort_by=="-fibre" %}selected{% endif %}>High Fibre</option>
+                <option value="fats" {% if request.GET.sort_by=="fats" %}selected{% endif %}>Low Fat</option>
+                <option value="carbs" {% if request.GET.sort_by=="carbs" %}selected{% endif %}>Low Carbs</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary mt-2" style="width: 120px;">Apply</button>
+        </fieldset>
+    </form>
+    <!-- Meal Cards -->
+    <div class="row g-3">
+        {% for meal in meals %}
+        <div class="col-md-4">
+            <a href="{% url 'meal_detail' meal.id %}" class="text-decoration-none">
+                <div class="card h-100 shadow-sm">
+                    {% if meal.image %}
+                    <img src="{{ meal.image.url }}" class="card-img-top" alt="{{ meal.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400" class="card-img-top" alt="{{ meal.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">{{ meal.name }}</h5>
+
+                        <p class="card-text text-dark">
+                            <strong>Category:</strong>
+                            {% for category in meal.categories.all %}
+                            {{ category.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                            <span>Not categorized</span>
+                            {% endfor %}
+                        </p>
+
+                        <p class="card-text text-dark">{{ meal.description|truncatewords:15 }}</p>
+
+                        <!-- Macronutrient Details -->
+                        <p class="card-text text-dark"><strong>Calories:</strong> {{ meal.calories }}</p>
+                        <p class="card-text text-dark"><strong>Protein:</strong> {{ meal.protein }}g</p>
+                        <p class="card-text text-dark"><strong>Carbs:</strong> {{ meal.carbs }}g</p>
+                        <p class="card-text text-dark"><strong>Fats:</strong> {{ meal.fats }}g</p>
+                        <p class="card-text text-dark"><strong>High Fibre:</strong> {{ meal.fibre }}g</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No meals available.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

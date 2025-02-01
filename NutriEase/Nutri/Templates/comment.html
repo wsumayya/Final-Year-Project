@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Comments</h1>
+
+
+    <!-- Add a new comment -->
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <textarea name="comment" class="form-control mb-2" placeholder="Write a comment..." required></textarea>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+
+
+    <!-- Display All Comments -->
+    <div class="comment">
+        {% for comment in comments %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="card-text">{{ comment.content }}</p>
+                <small class="text-muted">
+                    Posted by <strong>{{ comment.user.username }}</strong> on {{ comment.created_at|date:"d M Y, H:i" }}
+                </small>
+
+
+                <!-- Reply Form -->
+                <form method="POST" class="mt-2">
+                    {% csrf_token %}
+                    <textarea name="comment" class="form-control mb-2" placeholder="Write a reply..."
+                        required></textarea>
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <button type="submit" class="btn btn-secondary btn-sm">Reply</button>
+                </form>
+
+                <!-- Display Replies -->
+                <div class="ml-4 mt-3">
+                    {% for reply in comment.replies.all %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <p class="card-text">{{ reply.content }}</p>
+                            <small class="text-muted">
+                                Replied by <strong>{{ reply.user.username }}</strong> on {{ reply.created_at|date:"d M
+                                Y, H:i" }}
+                            </small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Be the first!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

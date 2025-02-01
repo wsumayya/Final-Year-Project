@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | NutriEase</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fa; /* Neutral light tone */
+            color: #333; /* Dark gray for readability */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        /* Centered container styles */
+        .container {
+            background-color: #ffffff; /* White card background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            width: 100%;
+            max-width: 400px; /* Restrict width */
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Heading styles */
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #007BFF; /* Calming blue accent */
+        }
+
+        /* Form styles */
+        form {
+            display: flex;
+            flex-direction: column; /* Stack fields vertically */
+            gap: 15px; /* Add spacing between fields */
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: left;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the input field */
+            left: 50%;
+            margin-left: -150px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Button styles */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue for hover */
+        }
+
+        /* Link styles */
+        .link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+<h1>Register</h1>
+
+{% block content %}
+<div class="container" style="margin-top: 30px;">
+    <h2 class="text-center mb-4" style="color: #007BFF;">Register for NutriEase</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Join Now</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+        <div class="form-group text-center mt-3">
+            <small class="text-muted">
+                Already have an account? 
+                <a href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </form>
+</div>
+{% endblock %}
+</body> 

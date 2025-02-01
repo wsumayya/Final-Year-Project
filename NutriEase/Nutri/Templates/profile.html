@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Your Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .height-input-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .height-input-wrapper input {
+            flex: 1;
+        }
+
+        .height-input-wrapper select {
+            width: 120px;
+            margin-left: 10px;
+        }
+
+        /* Custom Style to show unit below input */
+        .unit-display {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Update Your Profile</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="weight">Weight:</label>
+            <div class="weight-input-wrapper">
+                <input type="number" id="weight" name="weight" placeholder="Enter your weight">
+                <select id="weight-unit" name="weight_unit">
+                    <option value="kg">Kilograms</option>
+                    <option value="lbs">Pounds</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="height">Height:</label>
+            <div class="height-input-wrapper">
+                <input type="number" id="height" name="height" placeholder="Enter your height">
+                <select id="height-unit" name="height_unit">
+                    <option value="cm">Centimeters</option>
+                    <option value="ft">Feet</option>
+                </select>
+            </div>
+            <div id="height-display" class="unit-display"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            {{ form.age }}
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            {{ form.gender }}
+        </div>
+
+        <div class="form-group">
+            <label for="activity_level">Activity Level:</label>
+            {{ form.activity_level }}
+        </div>
+
+        <div class="form-group">
+            <label for="goal">Goal:</label>
+            {{ form.goal }}
+        </div>
+
+        <button type="submit" class="btn">Save Profile</button>
+    </form>
+</div>
+
+<script>
+    // Function to display the selected unit without showing the result in an input box
+    function displayUnit() {
+        var heightInput = document.getElementById('height');
+        var unitSelect = document.getElementById('height-unit');
+        var currentUnit = unitSelect.value;
+
+        // Display the selected height value and unit below the input
+        var displayText = heightInput.value + ' ' + currentUnit;
+        document.getElementById('height-display').innerText = displayText;
+    }
+
+    // Event listeners for height input and unit change
+    document.getElementById('height').addEventListener('input', displayUnit);
+    document.getElementById('height-unit').addEventListener('change', displayUnit);
+    
+    window.onload = function() {
+        displayUnit(); // Ensure the value is displayed on load if height input exists
+    };
+</script>
+
+</body>
+</html>
