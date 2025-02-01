@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Meal, Category, Comment
+from .models import Meal, Category, Comment, FavouriteMeal
 from .models import Profile
 from .models import Meal  # ✅ Only import Meal
 
@@ -31,3 +31,12 @@ class CommentAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'weight', 'height', 'age', 'gender', 'activity_level', 'goal')  # Removed extra comma
     search_fields = ('user__username', 'user__first_name', 'user__last_name')  # Correct field references
+
+
+
+
+@admin.register(FavouriteMeal)
+class FavouriteMealAdmin(admin.ModelAdmin):
+    list_display = ('user', 'meal', 'added_at')  # Show user, meal, and date added
+    search_fields = ('user__username', 'meal__name')  # Allow searching by user and meal name
+    list_filter = ('added_at',)  # Filter by date added

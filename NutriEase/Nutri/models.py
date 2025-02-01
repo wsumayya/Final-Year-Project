@@ -29,6 +29,8 @@ class Meal(models.Model):
 
 
 
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     weight = models.IntegerField(default=70)  # Add a default value
@@ -68,3 +70,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content[:50]
+
+
+
+
+
+
+class FavouriteMeal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.meal.name}"

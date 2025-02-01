@@ -18,18 +18,17 @@
             <label for="sort_by"><strong>Sort by:</strong></label>
             <select name="sort_by" id="sort_by" class="form-select">
                 <option value="">-- Select --</option>
-                <option value="calories" {% if request.GET.sort_by=="calories" %}selected{% endif %}>Low Calories
-                </option>
-                <option value="-protein" {% if request.GET.sort_by=="-protein" %}selected{% endif %}>High Protein
-                </option>
-                <option value="-fibre" {% if request.GET.sort_by=="-fibre" %}selected{% endif %}>High Fibre</option>
-                <option value="fats" {% if request.GET.sort_by=="fats" %}selected{% endif %}>Low Fat</option>
-                <option value="carbs" {% if request.GET.sort_by=="carbs" %}selected{% endif %}>Low Carbs</option>
+                <option value="calories" {% if request.GET.sort_by|default:'' == "calories" %}selected{% endif %}>Calories</option>
+                <option value="protein" {% if request.GET.sort_by|default:'' == "protein" %}selected{% endif %}>Protein</option>
+                <option value="fibre" {% if request.GET.sort_by|default:'' == "fibre" %}selected{% endif %}>Fibre</option>
+                <option value="low_fat" {% if request.GET.sort_by|default:'' == "low_fat" %}selected{% endif %}>Low Fat</option>
+                <option value="low_carbs" {% if request.GET.sort_by|default:'' == "low_carbs" %}selected{% endif %}>Low Carbs</option>
             </select>
 
             <button type="submit" class="btn btn-primary mt-2" style="width: 120px;">Apply</button>
         </fieldset>
     </form>
+
     <!-- Meal Cards -->
     <div class="row g-3">
         {% for meal in meals %}
@@ -61,6 +60,13 @@
                         <p class="card-text text-dark"><strong>Carbs:</strong> {{ meal.carbs }}g</p>
                         <p class="card-text text-dark"><strong>Fats:</strong> {{ meal.fats }}g</p>
                         <p class="card-text text-dark"><strong>High Fibre:</strong> {{ meal.fibre }}g</p>
+
+                        <!-- Add to Favourites Button -->
+                        <form action="{% url 'add_to_favourites' meal.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning">Add to Favourites</button>
+                        </form>
+
                     </div>
                 </div>
             </a>

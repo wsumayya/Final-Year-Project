@@ -10,7 +10,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
 from .forms import MealFilterForm
-from .models import Meal, Category
+from .models import Meal, Category, FavouriteMeal
 from django.shortcuts import get_object_or_404
 from .models import Comment
 
@@ -146,7 +146,7 @@ def meals_view(request):
             meals = meals.filter(categories__in=selected_categories).distinct()
 
     # Sorting logic based on query parameters
-    sort_by = request.GET.get('sort_by')
+    sort_by = request.GET.get('sort_by', '')  # Default to empty string to prevent None
     if sort_by == 'calories':
         meals = meals.order_by('calories')  # Sort by calories (ascending)
     elif sort_by == 'protein':
@@ -194,3 +194,32 @@ def comments(request):
             return redirect('comments')  # Redirect to the same page after posting a comment
 
     return render(request, 'comment.html', {'comments': all_comments})
+
+
+
+
+@login_required
+def add_to_favourites(request, meal_id):
+    """Allows users to add meals to their favourites"""
+    meal = get_object_or_404(Meal, id=meal_id)
+    FavouriteMeal.objects.create(user=request.user, meal=meal)  # Add to favourites
+    return redirect('favourite')  # Redirect to favourites page
+
+@login_required
+def favourites_list(request):
+    """Displays all the meals a user has favourited"""
+    favourite_meals = FavouriteMeal.objects.filter(user=request.user).order_by('-added_at')
+    return render(request, "favourite.html", {"favourite_meals": favourite_meals})
+
+@login_required
+def meal_detail(request, meal_id):
+    """Displays the details of a selected favourite meal"""
+    meal = get_object_or_404(Meal, id=meal_id)
+    return render(request, "meal-detail.html", {"meal": meal})
+
+@login_required
+def remove_from_favourites(request, meal_id):
+    """Removes a meal from the user's favourites"""
+    meal = get_object_or_404(Meal, id=meal_id)
+    FavouriteMeal.objects.filter(user=request.user, meal=meal).delete()
+    return redirect('favourite')
