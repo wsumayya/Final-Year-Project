@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .account-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .account-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .account-button:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown a {
+        display: block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: black;
+        border-bottom: 1px solid #ddd;
+        white-space: nowrap; /* Prevent wrapping */
+    }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .account-menu:hover .dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>NutriEase</h1>
+        <div class="account-menu">
+            <button class="account-button">Account</button>
+            <div class="dropdown">
+                <a href="{% url 'register' %}">Sign Up</a>
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Main Content -->
+    <div>
+        <h2>Welcome to NutriEase!</h2>
+        <p>Your personalised nutrition companion.</p>
+    </div>
+
+</body>
+</html>
