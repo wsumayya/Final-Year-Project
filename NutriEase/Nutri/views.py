@@ -14,8 +14,8 @@ from .forms import RegisterForm, ProfileForm, MealFilterForm
 from .models import Profile, Meal, Category, FavouriteMeal, Comment
 
 # Home Page View
-def index(request):
-    return render(request, 'index.html')  # This will render the 'home.html' template
+def home(request):
+    return render(request, 'home.html')  # This will render the 'home.html' template
 
 # User Registration View
 def register(request):
