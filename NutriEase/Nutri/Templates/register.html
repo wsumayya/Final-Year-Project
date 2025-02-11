@@ -8,22 +8,22 @@
         /* General body styles */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f9fa; /* Neutral light tone */
-            color: #333; /* Dark gray for readability */
+            background-color: #f7f9fa; 
+            color: #333; 
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
+            height: 100vh; 
         }
 
         /* Centered container styles */
         .container {
-            background-color: #ffffff; /* White card background */
+            background-color: #ffffff; 
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
             width: 100%;
-            max-width: 400px; /* Restrict width */
+            max-width: 400px; 
             padding: 30px;
             text-align: center;
         }
@@ -32,14 +32,14 @@
         .container h2 {
             margin-bottom: 20px;
             font-size: 24px;
-            color: #007BFF; /* Calming blue accent */
+            color: #007BFF; 
         }
 
         /* Form styles */
         form {
             display: flex;
-            flex-direction: column; /* Stack fields vertically */
-            gap: 15px; /* Add spacing between fields */
+            flex-direction: column; 
+            gap: 15px; 
         }
 
         input {
@@ -56,7 +56,7 @@
             outline: none;
         }
 
-        /* Tooltip styles */
+        
         .tooltip {
             position: relative;
             display: inline-block;
@@ -74,9 +74,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             position: absolute;
             z-index: 1;
-            bottom: 125%; /* Position above the input field */
+            bottom: 125%; 
             left: 50%;
-            margin-left: -150px; /* Center the tooltip */
+            margin-left: -150px; 
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -99,10 +99,10 @@
         }
 
         button:hover {
-            background-color: #0056b3; /* Darker blue for hover */
+            background-color: #0056b3; 
         }
 
-        /* Link styles */
+       
         .link {
             margin-top: 15px;
             font-size: 14px;
@@ -121,31 +121,35 @@
 <body>
     
 
-{% extends 'base.html' %}
+    {% extends 'base.html' %}  
 
-{% load crispy_forms_tags %}
-
-<h1>Register</h1>
-
-{% block content %}
-<div class="container" style="margin-top: 30px;">
-    <h2 class="text-center mb-4" style="color: #007BFF;">Register for NutriEase</h2>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Join Now</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </div>
-        <div class="form-group text-center mt-3">
-            <small class="text-muted">
-                Already have an account? 
-                <a href="{% url 'login' %}">Sign In</a>
-            </small>
-        </div>
-    </form>
-</div>
-{% endblock %}
-</body> 
+    {% load crispy_forms_tags %}  <!-- Loading crispy forms for better form styling -->
+    
+    <h1>Register</h1>  <!-- Page heading -->
+    
+    {% block content %}  <!-- Start of content block -->
+    <div class="container" style="margin-top: 30px;">  <!-- Main container with margin for spacing -->
+        <h2 class="text-center mb-4" style="color: #007BFF;">Register for NutriEase</h2>  <!-- Page title with styling -->
+    
+        <form action="" method="POST">  <!-- Form for user registration -->
+            {% csrf_token %}  <!-- CSRF token for security -->
+            <fieldset class="form-group">  <!-- Fieldset to group form elements -->
+                <legend class="border-bottom mb-4">Join Now</legend> 
+                {{ form|crispy }}  <!-- Rendering the form using crispy forms for better styling -->
+            </fieldset>
+            
+            <div class="form-group text-center">  <!-- Container for the submit button -->
+                <button type="submit" class="btn btn-primary">Sign Up</button> 
+            </div>
+    
+            <div class="form-group text-center mt-3">  <!-- Container for login link -->
+                <small class="text-muted">
+                    Already have an account? 
+                    <a href="{% url 'login' %}">Sign In</a>  <!-- Link to login page -->
+                </small>
+            </div>
+        </form>
+    </div>
+    {% endblock %} 
+    
+    </body>  

@@ -1,37 +1,37 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %}  <!-- Extending the base template -->
+{% block content %}  <!-- Start of content block -->
 <div class="container">
-    <h1 class="mb-4">My Favourite Meals</h1>
+    <h1 class="mb-4">My Favourite Meals</h1>  <!-- Page heading -->
     
-    {% if favourite_meals %}
-        <div class="row g-3">
-            {% for fav in favourite_meals %}
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <a href="{% url 'meal_detail' fav.meal.id %}" class="text-decoration-none">
-                        {% if fav.meal.image %}
-                        <img src="{{ fav.meal.image.url }}" class="card-img-top" alt="{{ fav.meal.name }}">
-                        {% else %}
+    {% if favourite_meals %}  <!-- Check if there are any favourite meals -->
+        <div class="row g-3">  <!-- Bootstrap grid for responsive layout -->
+            {% for fav in favourite_meals %}  <!-- Loop through each favourite meal -->
+            <div class="col-md-4">  <!-- Display each meal in a 3-column layout -->
+                <div class="card h-100 shadow-sm">  <!-- Card container with shadow effect -->
+                    <a href="{% url 'meal_detail' fav.meal.id %}" class="text-decoration-none">  <!-- Link to meal details page -->
+                        {% if fav.meal.image %}  <!-- Check if meal has an image -->
+                        <img src="{{ fav.meal.image.url }}" class="card-img-top" alt="{{ fav.meal.name }}">  <!-- Display meal image -->
+                        {% else %}  <!-- If no image, show a placeholder image -->
                         <img src="https://via.placeholder.com/400" class="card-img-top" alt="{{ fav.meal.name }}">
                         {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ fav.meal.name }}</h5>
-                            <p class="card-text text-dark"><strong>Added on:</strong> {{ fav.added_at }}</p>
-                            <p class="card-text text-dark">{{ fav.meal.description|truncatewords:15 }}</p>
+                        <div class="card-body">  <!-- Card body section -->
+                            <h5 class="card-title text-dark">{{ fav.meal.name }}</h5>  <!-- Meal name -->
+                            <p class="card-text text-dark"><strong>Added on:</strong> {{ fav.added_at }}</p>  <!-- Date meal was added -->
+                            <p class="card-text text-dark">{{ fav.meal.description|truncatewords:15 }}</p>  <!-- Display description -->
                         </div>
                     </a>
-                    <div class="card-footer text-center">
-                        <form action="{% url 'remove_from_favourites' fav.meal.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger w-100">Remove from Favourites</button>
+                    <div class="card-footer text-center">  <!-- Card footer with form -->
+                        <form action="{% url 'remove_from_favourites' fav.meal.id %}" method="POST">  <!-- Form to remove meal from favourites -->
+                            {% csrf_token %}  <!-- CSRF token for security -->
+                            <button type="submit" class="btn btn-danger w-100">Remove from Favourites</button>  <!-- Button to remove meal -->
                         </form>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            {% endfor %}  <!-- End loop -->
         </div>
-    {% else %}
+    {% else %}  <!-- If no favourite meals, display message -->
         <p class="text-center">You haven't added any favourites yet.</p>
     {% endif %}
 </div>
-{% endblock %}
+{% endblock %}  <!-- End of content block -->

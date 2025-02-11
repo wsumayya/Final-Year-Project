@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %}  <!-- Extending the base template -->
+{% block content %}  <!-- Start of content block -->
 
 <div class="container">
-    <h1 class="mb-4">{{ meal.name }}</h1>
+    <h1 class="mb-4">{{ meal.name }}</h1>  <!-- Display meal name -->
 
     <div class="row">
         <!-- Meal Image -->
         <div class="col-md-6">
-            {% if meal.image %}
-            <img src="{{ meal.image.url }}" class="img-fluid rounded shadow" alt="{{ meal.name }}">
-            {% else %}
+            {% if meal.image %}  <!-- Check if meal has an image -->
+            <img src="{{ meal.image.url }}" class="img-fluid rounded shadow" alt="{{ meal.name }}">  <!-- Display meal image -->
+            {% else %}  <!-- If no image, show placeholder -->
             <img src="https://via.placeholder.com/400" class="img-fluid rounded shadow" alt="{{ meal.name }}">
             {% endif %}
         </div>
@@ -18,9 +18,9 @@
         <div class="col-md-6">
             <h4>Categories</h4>
             <p>
-                {% for category in meal.categories.all %}
+                {% for category in meal.categories.all %}  <!-- Loop through categories -->
                 <span class="badge bg-primary">{{ category.name }}</span>
-                {% empty %}
+                {% empty %}  <!-- If no categories -->
                 <span>No category assigned.</span>
                 {% endfor %}
             </p>
@@ -28,41 +28,37 @@
     </div>
 
     <h4>Description</h4>
-    <p style="white-space: pre-line;">{{ meal.description }}</p>
+    <p style="white-space: pre-line;">{{ meal.description }}</p>  <!-- Display meal description -->
 
     <!-- Ingredients Section -->
     <h4 class="mt-4">Ingredients</h4>
-    {% if meal.ingredients %}
+    {% if meal.ingredients %}  <!-- Check if ingredients exist -->
     <ul>
-        {% for ingredient in meal.ingredients.splitlines %}
+        {% for ingredient in meal.ingredients.splitlines %}  <!-- Loop through ingredients -->
         <li>{{ ingredient }}</li>
         {% endfor %}
     </ul>
-    {% else %}
+    {% else %}  <!-- If no ingredients listed -->
     <p>No ingredients listed.</p>
     {% endif %}
 
-
-
-    <!--instruction section-->
+    <!-- Instruction Section -->
     <h4 class="mt-4">Instructions</h4>
-    {% if meal.instructions %}
+    {% if meal.instructions %}  <!-- Check if instructions exist -->
     <ul>
-        {% for step in meal.instructions.splitlines %}
-        {% if step.strip %}
-        {% if "Step" in step %}
-        <li><strong>{{ step }}</strong>
-            {% else %}
-            <p>{{ step }}</p>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
+        {% for step in meal.instructions.splitlines %}  <!-- Loop through instructions -->
+        {% if step.strip %}  <!-- Remove empty lines -->
+        {% if "Step" in step %}  <!-- Highlight steps containing 'Step' -->
+        <li><strong>{{ step }}</strong></li>
+        {% else %}
+        <p>{{ step }}</p>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
     </ul>
-    {% else %}
+    {% else %}  
     <p>No instructions provided.</p>
     {% endif %}
-
-
 
     <!-- Nutrition Chart -->
     <h4 class="mt-4">Nutritional Breakdown</h4>
@@ -77,36 +73,35 @@
                     labels: ['Protein (g)', 'Carbs (g)', 'Fats (g)', 'Fibre (g)'],
                     datasets: [{
                         data: [
-                            {{ meal.protein }},
-                    {{ meal.carbs }},
-                        {{ meal.fats }},
-            {{ meal.fibre }}
-                    ],
-            backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722'],
-            borderColor: ['#388E3C', '#1976D2', '#FFA000', '#D84315'],
-            borderWidth: 1
-                }]
-            },
-            options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function (tooltipItem) {
-                            return tooltipItem.raw;  // Display only the number
+                            {{ meal.protein }},  <!-- Protein value -->
+                            {{ meal.carbs }},  <!-- Carbohydrate value -->
+                            {{ meal.fats }},  <!-- Fat value -->
+                            {{ meal.fibre }}  <!-- Fibre value -->
+                        ],
+                        backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722'],
+                        borderColor: ['#388E3C', '#1976D2', '#FFA000', '#D84315'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.raw;  
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
+            });
         });
-    });
     </script>
 
-
-    {% endblock %}
+{% endblock %}  <!-- End of content block -->

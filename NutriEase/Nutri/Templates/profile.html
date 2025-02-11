@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Your Profile</title>
+    <meta charset="UTF-8">  <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Ensures proper scaling on mobile devices -->
+    <title>Update Your Profile</title>  <!-- Page title -->
+
     <style>
+        /* General page styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
@@ -12,6 +14,7 @@
             padding: 0;
         }
 
+        /* Styling for the container box */
         .container {
             width: 50%;
             margin: 50px auto;
@@ -22,6 +25,7 @@
             box-sizing: border-box;
         }
 
+        /* Header styling */
         h2 {
             text-align: center;
             font-size: 30px;
@@ -29,6 +33,7 @@
             color: #333;
         }
 
+        /* Label styling */
         label {
             font-size: 16px;
             font-weight: bold;
@@ -36,6 +41,7 @@
             display: block;
         }
 
+        /* Input fields and dropdown styling */
         input[type="text"], input[type="number"], select {
             width: 100%;
             padding: 12px;
@@ -46,10 +52,12 @@
             box-sizing: border-box;
         }
 
+        /* Grouping form elements */
         .form-group {
             margin-bottom: 20px;
         }
 
+        /* Button styling */
         .btn {
             width: 100%;
             padding: 12px;
@@ -62,10 +70,12 @@
             transition: background-color 0.3s ease;
         }
 
+        /* Button hover effect */
         .btn:hover {
             background-color: #0056b3;
         }
 
+        /* Error message styling */
         .error {
             color: red;
             font-size: 14px;
@@ -73,6 +83,7 @@
             margin-top: 20px;
         }
 
+        /* Custom styling for height input */
         .height-input-wrapper {
             display: flex;
             align-items: center;
@@ -87,7 +98,7 @@
             margin-left: 10px;
         }
 
-        /* Custom Style to show unit below input */
+        /* Custom style for displaying the selected unit */
         .unit-display {
             margin-top: 10px;
             font-size: 14px;
@@ -100,7 +111,9 @@
 <div class="container">
     <h2>Update Your Profile</h2>
     <form method="POST">
-        {% csrf_token %}
+        {% csrf_token %}  <!-- Security token for form submission -->
+
+        <!-- Weight Input -->
         <div class="form-group">
             <label for="weight">Weight:</label>
             <div class="weight-input-wrapper">
@@ -112,6 +125,7 @@
             </div>
         </div>
 
+        <!-- Height Input -->
         <div class="form-group">
             <label for="height">Height:</label>
             <div class="height-input-wrapper">
@@ -121,35 +135,40 @@
                     <option value="ft">Feet</option>
                 </select>
             </div>
-            <div id="height-display" class="unit-display"></div>
+            <div id="height-display" class="unit-display"></div>  <!-- Display for selected height unit -->
         </div>
 
+        <!-- Age Input -->
         <div class="form-group">
             <label for="age">Age:</label>
-            {{ form.age }}
+            {{ form.age }}  <!-- Django form field for age -->
         </div>
 
+        <!-- Gender Input -->
         <div class="form-group">
             <label for="gender">Gender:</label>
-            {{ form.gender }}
+            {{ form.gender }}  <!-- Django form field for gender -->
         </div>
 
+        <!-- Activity Level Selection -->
         <div class="form-group">
             <label for="activity_level">Activity Level:</label>
-            {{ form.activity_level }}
+            {{ form.activity_level }}  <!-- Django form field for activity level -->
         </div>
 
+        <!-- Goal Selection -->
         <div class="form-group">
             <label for="goal">Goal:</label>
-            {{ form.goal }}
+            {{ form.goal }}  <!-- Django form field for goal -->
         </div>
 
+        <!-- Submit Button -->
         <button type="submit" class="btn">Save Profile</button>
     </form>
 </div>
 
 <script>
-    // Function to display the selected unit without showing the result in an input box
+    // Function to display the selected unit without modifying the input value
     function displayUnit() {
         var heightInput = document.getElementById('height');
         var unitSelect = document.getElementById('height-unit');
@@ -160,12 +179,13 @@
         document.getElementById('height-display').innerText = displayText;
     }
 
-    // Event listeners for height input and unit change
+    // Event listeners for height input and unit selection change
     document.getElementById('height').addEventListener('input', displayUnit);
     document.getElementById('height-unit').addEventListener('change', displayUnit);
-    
+
+    // Ensure the unit is displayed on page load
     window.onload = function() {
-        displayUnit(); // Ensure the value is displayed on load if height input exists
+        displayUnit();
     };
 </script>
 

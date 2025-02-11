@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Ensures responsive design -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  <!-- Font Awesome for icons -->
  
     <style>
+        /* General styling for body */
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f9fa;
@@ -15,6 +16,7 @@
             height: 100vh;
         }
 
+        /* Container box styling */
         .container {
             background-color: #ffffff;
             border-radius: 10px;
@@ -24,6 +26,7 @@
             text-align: center;
         }
 
+        /* Styling for input fields */
         input {
             padding: 10px;
             margin-bottom: 15px;
@@ -34,6 +37,7 @@
             box-sizing: border-box;
         }
 
+        /* Styling for buttons */
         button {
             background-color: #007BFF;
             color: white;
@@ -44,10 +48,12 @@
             cursor: pointer;
         }
 
+        /* Button hover effect */
         button:hover {
             background-color: #0056b3;
         }
 
+        /* Styling for links */
         .link {
             margin-top: 15px;
             font-size: 14px;
@@ -65,25 +71,26 @@
 </head>
 <body>
 
-    {% extends 'base.html' %}
+    {% extends 'base.html' %}  <!-- Extending the base template -->
 
-   <h1>Login</h1>
+    <h1>Login</h1>  <!-- Page title -->
     
-    {% block content %}
-    <div class="container" style="margin-top: 30px;">
-        <h2 class="text-center mb-4" style="color: #007BFF;">Login</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+    {% block content %}  <!-- Start of content block -->
+    <div class="container" style="margin-top: 30px;">  <!-- Main login container -->
+        <h2 class="text-center mb-4" style="color: #007BFF;">Login</h2>  <!-- Login heading -->
+        <form method="post">  <!-- Form for user login -->
+            {% csrf_token %}  <!-- CSRF token for security -->
+            {{ form.as_p }}  <!-- Render form fields dynamically -->
+            <button type="submit" class="btn btn-primary w-100">Login</button>  <!-- Submit button -->
         </form>
-        <div class="form-group text-center mt-3">
+        <div class="form-group text-center mt-3">  <!-- Sign-up prompt -->
             <small class="text-muted">
                 Don't have an account? 
-                <a href="{% url 'register' %}">Sign Up</a>
+                <a href="{% url 'register' %}">Sign Up</a>  <!-- Link to registration page -->
             </small>
         </div>
     </div>
-    {% endblock %}
+    {% endblock %}  <!-- End of content block -->
+
 </body>
 </html>

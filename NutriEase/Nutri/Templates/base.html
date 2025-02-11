@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Django Dashboard{% endblock %}</title>
+    
+    <!-- Including Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Including Bootstrap for responsive design and styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
+        /* Styling for the navigation bar */
         nav {
             padding: 15px;
             background-color: #f8f9fa;
@@ -16,12 +22,14 @@
             align-items: center;
         }
 
+        /* Styling for navigation links */
         nav a {
             margin-right: 15px;
             color: #007bff;
             text-decoration: none;
         }
 
+        /* Adding underline effect when hovering over navigation links */
         nav a:hover {
             text-decoration: underline;
         }
@@ -30,25 +38,28 @@
 
 <body>
     <main>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated %}  <!-- Check if the user is logged in -->
         <nav class="main-menu">
-            <h1>NutriEase</h1>
-            {% load static %}
+            <h1>NutriEase</h1>  <!-- Branding title -->
+            
+            {% load static %}  <!-- Load Django static files -->
+            
+            <!-- Displaying the application logo -->
             <img class="logo" src="{% static 'images/logo.jpg' %}" alt="NutriEase Logo" />
+            
+            <!-- Navigation menu -->
             <ul>
                 <li class="nav-item"><a href="{% url 'profile' %}"><i class="fa fa-user nav-icon"></i> Profile</a></li>
-                <li class="nav-item"><a href="{% url 'meals' %}"><i class="fa fa-person-running nav-icon"></i> Suggested
-                        Meals</a></li>
-                <li><a href="{% url 'favourite' %}">Favourite Meals</a></li> 
-
-                <li class="nav-item"><a href="{% url 'comments' %}"><i class="fa fa-calendar-check nav-icon"></i>
-                        Comments/Reviews</a></li>
+                <li class="nav-item"><a href="{% url 'meals' %}"><i class="fa fa-person-running nav-icon"></i> Suggested Meals</a></li>
+                <li><a href="{% url 'favourite' %}">Favourite Meals</a></li> <!-- Link to favourite meals page -->
+                <li class="nav-item"><a href="{% url 'comments' %}"><i class="fa fa-calendar-check nav-icon"></i> Comments/Reviews</a></li>
                 <li class="nav-item"><a href="{% url 'logout' %}"><i class="fa fa-sliders nav-icon"></i> Logout</a></li>
             </ul>
         </nav>
-        {% endif %}
+        {% endif %}  <!-- End of authentication check -->
+
         <div class="container mt-4">
-            {% block content %} {% endblock %}
+            {% block content %} {% endblock %}  <!-- Placeholder for page-specific content -->
         </div>
     </main>
 </body>

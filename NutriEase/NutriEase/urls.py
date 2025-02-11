@@ -30,7 +30,7 @@ urlpatterns = [
     path('favourite-meal/<int:meal_id>/', add_to_favourites, name='add_to_favourites'),
     path('favourite/', favourites_list, name='favourite'), 
     path('meal/<int:meal_id>/', meal_detail, name='meal_detail'),
-    path('meals/', views.meals_view, name='meal_list'),  # Ensure 'meal_list' exists
+    path('meals/', views.meals_view, name='meal_list'), 
     path('remove-favourite/<int:meal_id>/', remove_from_favourites, name='remove_from_favourites'),
 ]
 
