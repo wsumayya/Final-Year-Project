@@ -169,3 +169,10 @@ def remove_from_favourites(request, meal_id):
     meal = get_object_or_404(Meal, id=meal_id)  # Retrieve meal
     FavouriteMeal.objects.filter(user=request.user, meal=meal).delete()  # Remove from favourites
     return redirect('favourite')  # Redirect to favourites page
+
+
+
+
+
+def my_view(request):
+    return render(request, 'template.html', {})
